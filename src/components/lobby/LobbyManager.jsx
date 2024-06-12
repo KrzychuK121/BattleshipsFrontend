@@ -1,0 +1,34 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
+import CreateLobby from './CreateLobby';
+
+function LobbyManager() {
+    return (
+        <Modal
+            show={true}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Tworzenie lobby
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h4>Stworz lobby lub dolacz do przyjaciela</h4>
+                <div>
+                    <CreateLobby />
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
+
+export default LobbyManager;
