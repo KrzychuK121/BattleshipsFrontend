@@ -4,9 +4,10 @@
     "\\public",
     "\\src",
     "\\src\\components",
+    "\\src\\components\\board",
     "\\src\\components\\lobby",
     "\\src\\routes"
   ],
-  "SelectedNode": "\\src\\components\\lobby",
+  "SelectedNode": "\\src\\components\\board",
   "PreviewInSolutionExplorer": false
 }
