@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import DefaultTemplate from './routes/DefaultTemplate';
 import LobbyManager from './components/lobby/LobbyManager';
+import InitBoardPanel from './components/InitBoardPanel';
 import Board from './components/board/Board';
 
 const router = createBrowserRouter(
@@ -15,6 +16,9 @@ const router = createBrowserRouter(
                 },
                 {
                     path: '/board', element: <Board />
+                },
+                {
+                    path: '/initBoard', element: <InitBoardPanel />
                 }
             ]
         }
