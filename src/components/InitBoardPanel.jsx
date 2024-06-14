@@ -12,10 +12,12 @@ function InitBoardPanel() {
 
     const onSelectedShipHandler = async (event) => {
         const clicked = event.currentTarget.value;
-        setLastSelected(clicked);
-        if (lastSelected === clicked) {
-            setLastSelected();
-        }
+        setLastSelected(
+            lastSelected === clicked
+            ? ''
+            : clicked
+        );
+        
     }
 
     return (
