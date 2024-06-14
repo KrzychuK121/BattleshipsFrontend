@@ -18,11 +18,21 @@ function getRows(rowsCount, colsCount, fieldType) {
     return rows;
 }
 
-function PlainBoard({rowsCount, colsCount, fieldType}) {
+function PlainBoard(
+    {   
+        selected,
+        rowsCount,
+        colsCount,
+        fieldType
+    }
+) {
 
     return (
-        <div className={classes.FieldFrame}>
-            <Table className={classes.BoardTable} bordered>
+        <div
+            id={selected ? classes.selectedFrame : ''}
+            className={classes.fieldFrame}
+        >
+            <Table className={classes.boardTable} bordered>
                 <tbody>
                     {getRows(rowsCount, colsCount, fieldType)}
                 </tbody>
