@@ -73,7 +73,8 @@ function PlainBoard(
         fieldType,
         onCellHoverHandler,
         onCellOutHandler,
-        highlightedCells
+        highlightedCells,
+        onScrollHandler
     }
 ) {
 
@@ -81,6 +82,7 @@ function PlainBoard(
         <div
             id={selected ? classes.selectedFrame : ''}
             className={classes.fieldFrame}
+            onWheel={onScrollHandler}
         >
             <Table className={classes.boardTable} bordered>
                 <tbody>
