@@ -37,7 +37,7 @@ function Board({ shipLength }) {
         setHighlightedCells([]);
     };
 
-    const onScrollHandler = (event) => {
+    const onWheelHandler = (event) => {
         setOrientation(
             event.deltaY < 0
             ? ShipOrientation.VERTICAL
@@ -53,7 +53,7 @@ function Board({ shipLength }) {
             onCellHoverHandler={onCellHoverHandler}
             onCellOutHandler={onCellOutHandler}
             highlightedCells={highlightedCells}
-            onScrollHandler={onScrollHandler}
+            onWheelHandler={onWheelHandler}
         />
     );
 }
