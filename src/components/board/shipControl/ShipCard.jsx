@@ -16,7 +16,8 @@ function ShipCard({ lastSelected, shipLength, onSelectedShipHandler }) {
             <button
                 className={classes.selectButton}
                 onClick={onSelectedShipHandler}
-                value={buttonValue}
+                id={buttonValue}
+                value={shipLength}
             >
                 <PlainBoard
                     selected={buttonValue === lastSelected}

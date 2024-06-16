@@ -8,16 +8,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col } from 'react-bootstrap';
 
 function InitBoardPanel() {
-    const [lastSelected, setLastSelected] = useState();
+    const [lastSelected, setLastSelected] = useState('');
+    const [selectedShipLength, setSelectedShipLength] = useState(0);
 
-    const onSelectedShipHandler = async (event) => {
-        const clicked = event.currentTarget.value;
+    const onSelectedShipHandler = (event) => {
+        const clicked = event.currentTarget.id;
+        const shipLength = event.currentTarget.value;
+
         setLastSelected(
             lastSelected === clicked
             ? ''
             : clicked
         );
-        
+
+        setSelectedShipLength(
+            lastSelected === clicked
+            ? 0
+            : shipLength
+        );
     }
 
     return (
@@ -25,7 +33,7 @@ function InitBoardPanel() {
             <Col md={7}>
                 <Row as='main' className='justify-content-center py-5'>
                     <Col xs={1} sm='auto'>
-                        <Board />
+                        <Board shipLength={selectedShipLength} />
                     </Col>
                     
                     <div className='my-5'></div>
