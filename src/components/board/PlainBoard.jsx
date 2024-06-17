@@ -10,31 +10,44 @@ function getRows(
     fieldType,
     onCellHoverHandler,
     onCellOutHandler,
-    highlightedCells
+    highlightedCells,
+    onCellClickHandler,
+    isCellOccupied
 ) {
     const rows = [];
 
     for (let i = 0; i < rowsCount; i++) {
         const cols = [];
         for (let j = 0; j < colsCount; j++) {
-            let id = `${i}${j}`
+            let id = `${i}${j}`;
             let isHighlighted =
                 highlightedCells != null &&
                 highlightedCells.includes(id);
+
+            let type = fieldType;
+
+            if (isHighlighted)
+                type = FieldType.HOVERED;
+
+            if (
+                isCellOccupied != null &&
+                isCellOccupied(id)
+            )
+                type = FieldType.SHIP;
 
             cols.push(
                 highlightedCells != null
                 ? getFieldWithHover(
                     id, i, j,
-                    isHighlighted
-                    ? FieldType.HOVERED
-                    : fieldType,
+                    type,
                     onCellHoverHandler,
-                    onCellOutHandler
+                    onCellOutHandler,
+                    onCellClickHandler
                 )
                 : getField(id, fieldType)
                 
             );
+
         }
         rows.push(<tr key={i}>{cols}</tr>);
     }
@@ -48,14 +61,18 @@ function getFieldWithHover(
     col,
     type,
     onCellHoverHandler,
-    onCellOutHandler
+    onCellOutHandler,
+    onCellClickHandler
 ) {
-    return <Field
-        key={id}
-        type={type}
-        onCellHoverHandler={() => onCellHoverHandler(row, col)}
-        onCellOutHandler={onCellOutHandler}
-    />;
+    return (
+        <Field
+            key={id}
+            type={type}
+            onCellHoverHandler={() => onCellHoverHandler(row, col)}
+            onCellOutHandler={onCellOutHandler}
+            onCellClickHandler={onCellClickHandler}
+        />
+    );
 }
 
 function getField(
@@ -74,7 +91,9 @@ function PlainBoard(
         onCellHoverHandler,
         onCellOutHandler,
         highlightedCells,
-        onWheelHandler
+        onWheelHandler,
+        onCellClickHandler,
+        isCellOccupied
     }
 ) {
 
@@ -93,7 +112,9 @@ function PlainBoard(
                             fieldType,
                             onCellHoverHandler,
                             onCellOutHandler,
-                            highlightedCells
+                            highlightedCells,
+                            onCellClickHandler,
+                            isCellOccupied
                         )
                     }
                 </tbody>

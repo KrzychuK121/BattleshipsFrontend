@@ -3,7 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Field({
 	type,
 	onCellHoverHandler,
-	onCellOutHandler
+	onCellOutHandler,
+	onCellClickHandler
 }) {
 	return (
 		<td
@@ -11,6 +12,7 @@ function Field({
 			style={{ backgroundColor: type }}
 			onMouseOver={onCellHoverHandler}
 			onMouseOut={onCellOutHandler}
+			onClick={onCellClickHandler}
 		></td>
 	);
 }

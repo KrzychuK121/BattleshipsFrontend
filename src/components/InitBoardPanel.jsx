@@ -10,10 +10,15 @@ import { Row, Col } from 'react-bootstrap';
 function InitBoardPanel() {
     const [lastSelected, setLastSelected] = useState('');
     const [selectedShipLength, setSelectedShipLength] = useState(0);
+    const [placedShips, setPlacedShips] = useState([]);
+
+    const onPlaceShipHandler = (newShip) => {
+        setPlacedShips([...placedShips, newShip]);
+    };
 
     const onSelectedShipHandler = (event) => {
         const clicked = event.currentTarget.id;
-        const shipLength = event.currentTarget.value;
+        const shipLength = parseInt(event.currentTarget.value);
 
         setLastSelected(
             lastSelected === clicked
@@ -26,14 +31,18 @@ function InitBoardPanel() {
             ? 0
             : shipLength
         );
-    }
+    };
 
     return (
         <Row className='justify-content-center'>
             <Col md={7}>
                 <Row as='main' className='justify-content-center py-5'>
                     <Col xs={1} sm='auto'>
-                        <Board shipLength={selectedShipLength} />
+                        <Board
+                            shipLength={selectedShipLength}
+                            onPlaceShipHandler={onPlaceShipHandler}
+                            placedShips={placedShips}
+                        />
                     </Col>
                     
                     <div className='my-5'></div>

@@ -10,7 +10,7 @@ const ShipOrientation = {
     VERTICAL: 'vertical'
 }
 
-function Board({ shipLength }) {
+function Board({ shipLength, onPlaceShipHandler, placedShips }) {
     const boardSize = 10;
     const [orientation, setOrientation] = useState(ShipOrientation.HORIZONTAL);
     const [highlightedCells, setHighlightedCells] = useState([]);
@@ -45,6 +45,19 @@ function Board({ shipLength }) {
         );
     }
 
+    const isCellOccupied = (cellId) => {
+        return placedShips.flat().includes(cellId);
+    };
+
+    const onCellClickHandler = () => {
+        if (
+            highlightedCells.length === shipLength &&
+            !highlightedCells.some(isCellOccupied)
+        )
+            onPlaceShipHandler(highlightedCells);
+    };
+
+
     return (
         <PlainBoard
             rowsCount={boardSize}
@@ -54,6 +67,8 @@ function Board({ shipLength }) {
             onCellOutHandler={onCellOutHandler}
             highlightedCells={highlightedCells}
             onWheelHandler={onWheelHandler}
+            onCellClickHandler={onCellClickHandler}
+            isCellOccupied={isCellOccupied}
         />
     );
 }
