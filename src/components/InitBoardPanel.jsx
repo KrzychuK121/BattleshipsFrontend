@@ -34,8 +34,13 @@ function InitBoardPanel() {
         )
     );
 
-    const onPlaceShipHandler = (newShip) => {
-        setPlacedShips([...placedShips, newShip]);
+    const onPlaceShipHandler = (fields) => {
+        setPlacedShips(
+            [
+                ...placedShips,
+                { name: 'shipNr' + fields.length, boardFields: fields }
+            ]
+        );
     };
 
     const onSelectedShipHandler = (event) => {
@@ -86,7 +91,9 @@ function InitBoardPanel() {
     }
 
     const isCellOccupied = (cellId) => {
-        return placedShips.flat().includes(cellId);
+        return placedShips.some(
+            ship => ship.boardFields.includes(cellId)
+        );
     };
 
     const onCellClickHandler = () => {
