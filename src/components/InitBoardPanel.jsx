@@ -19,6 +19,7 @@ function InitBoardPanel() {
     const [selectedShipLength, setSelectedShipLength] = useState(0);
 
     const [placedShips, setPlacedShips] = useState([]);
+    const [isShipPanelEmpty, setIsShipPanelEmpty] = useState(false);
 
     const [orientation, setOrientation] = useState(ShipOrientation.HORIZONTAL);
     const [highlightedCells, setHighlightedCells] = useState([]);
@@ -109,11 +110,28 @@ function InitBoardPanel() {
         shipCards.set(selectedShipLength, false);
         setShipCards(shipCards);
 
+        if (ifNoAvailableShips())
+            setIsShipPanelEmpty(true);
+
+        console.log(`isShipPanelEmpty? ${ifNoAvailableShips()}`);
+
         // clearing variables for highlighting ship shape on board
         setLastSelected('');
         setSelectedShipLength(0);
     };
 
+    /**
+     * Checks if <ShipPanel /> displays any ship to select, 
+     * which could be placed on board.
+     * 
+     * @returns false if at least one ship can be selected from <ShipPanel />. Otherwise false
+     */
+    const ifNoAvailableShips = () => {
+        for (let isPresent of shipCards.values())
+            if (isPresent)
+                return false;
+        return true;
+    }
 
     return (
         <Row className='justify-content-center'>
