@@ -1,31 +1,43 @@
 import ShipCard from './ShipCard';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 import { Row } from 'react-bootstrap';
 
-function ShipPanel({ lastSelected, onSelectedShipHandler }) {
+function getCards(shipCards, lastSelected, onSelectedShipHandler) {
+    const cards = [];
+
+    shipCards.forEach(
+        (isPresent, shipLength) => {
+            if (isPresent)
+                cards.push(
+                    <ShipCard
+                        key={shipLength}
+                        lastSelected={lastSelected}
+                        onSelectedShipHandler={onSelectedShipHandler}
+                        shipLength={shipLength}
+                    />
+                );
+        }
+    );
+
+    return cards;
+}
+
+function ShipPanel({
+    shipCards,
+    lastSelected,
+    onSelectedShipHandler
+}) {
     return (
         <Row>
-            <ShipCard
-                lastSelected={lastSelected}
-                onSelectedShipHandler={onSelectedShipHandler}
-                shipLength={2}
-            />
-            <ShipCard
-                lastSelected={lastSelected}
-                onSelectedShipHandler={onSelectedShipHandler}
-                shipLength={3}
-            />
-            <ShipCard
-                lastSelected={lastSelected}
-                onSelectedShipHandler={onSelectedShipHandler}
-                shipLength={4}
-            />
-            <ShipCard
-                lastSelected={lastSelected}
-                onSelectedShipHandler={onSelectedShipHandler}
-                shipLength={5}
-            />
+            {
+                getCards(
+                    shipCards,
+                    lastSelected,
+                    onSelectedShipHandler
+                )
+            }
         </Row>
     );
 }
