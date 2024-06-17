@@ -55,9 +55,6 @@ function LobbyManager() {
                     <CreateLobby joinLobby={ joinLobby } />
                 </div>
             </Modal.Body>
-            {/*<Modal.Footer>
-                <Button>Close</Button>
-            </Modal.Footer>*/}
         </Modal>
     );
 }
