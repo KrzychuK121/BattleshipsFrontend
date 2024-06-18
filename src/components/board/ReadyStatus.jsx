@@ -2,8 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 
 function ReadyStatus({ conn }) {
-    const onClickHandler = () => {
-        conn.send('User is ready');
+    const onClickHandler = async () => {
+        /*await conn.invoke(
+            'JoinSpecificLobby',
+            {
+                
+            }
+        );*/
     }
 
     return (

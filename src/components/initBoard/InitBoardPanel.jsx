@@ -155,7 +155,7 @@ function InitBoardPanel() {
                     <Col xs={1} sm='auto'>
                         {
                             isShipPanelEmpty
-                            ? <ReadyStatus />
+                            ? <ReadyStatus conn={conn} />
                             : <ShipPanel
                                   shipCards={shipCards}
                                   lastSelected={lastSelected}
