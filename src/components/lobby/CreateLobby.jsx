@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { HubContext } from '../../HubProvider/HubContext';
+
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
-function CreateLobby({ joinLobby, conn }) {
+function CreateLobby() {
     const [username, setUsername] = useState();
     const [chatConnection, setChatConnection] = useState();
+
     const navigate = useNavigate();
+    const { joinLobby } = useContext(HubContext);
 
     return (
         <Form onSubmit={
-            e => {
+            async (e) => {
                 e.preventDefault();
-                joinLobby(username, chatConnection);
-                navigate('/initBoard', {state: conn})
+                await joinLobby(username, chatConnection);
+                navigate('/initBoard');
             }
         }>
             <Row className='px-5 py-5'>
@@ -29,7 +34,9 @@ function CreateLobby({ joinLobby, conn }) {
                             onChange={e => setChatConnection(e.target.value)}
                         />
                     </Form.Group>
-                    <Button variant='primary' type='submit'>Utworz pokoj</Button>
+                    <Button variant='primary' type='submit'>
+                        Utworz pokoj
+                    </Button>
                 </Col>
             </Row>
         </Form>

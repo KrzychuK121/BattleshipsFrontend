@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Modal from 'react-bootstrap/Modal';
@@ -8,34 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 import CreateLobby from './CreateLobby';
 
 function LobbyManager() {
-    const [conn, setConnection] = useState();
-
-    const joinLobby = async (username, chatConnection) => {
-        try {
-            const conn = new HubConnectionBuilder()
-                .withUrl('http://localhost:5292/lobby')
-                .configureLogging(LogLevel.Information)
-                .build();
-
-            conn.on(
-                'JoinSpecificLobby',
-                (username, msg) => {
-                    console.log("msg: ", msg);
-                }
-            );
-
-            await conn.start();
-            await conn.invoke(
-                'JoinSpecificLobby',
-                { username, chatConnection }
-            );
-
-            setConnection(conn);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
     return (
         <Modal
             show={true}
@@ -51,7 +20,7 @@ function LobbyManager() {
             <Modal.Body>
                 <h4>Stworz lobby lub dolacz do przyjaciela</h4>
                 <div>
-                    <CreateLobby joinLobby={joinLobby} conn={conn} />
+                    <CreateLobby />
                 </div>
             </Modal.Body>
         </Modal>

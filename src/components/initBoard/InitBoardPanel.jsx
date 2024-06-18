@@ -1,5 +1,6 @@
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { HubContext } from '../../HubProvider/HubContext';
 
 import Board from '../board/Board';
 import ShipPanel from '../board/shipControl/ShipPanel';
@@ -16,12 +17,7 @@ const ShipOrientation = {
 
 function InitBoardPanel() {
     const boardSize = 10;
-
-    const location = useLocation();
-    const { state } = location || {};
-    const conn = state || {};
-
-    console.log(conn);
+    const { conn } = useContext(HubContext);
 
     const [lastSelected, setLastSelected] = useState('');
     const [selectedShipLength, setSelectedShipLength] = useState(0);
