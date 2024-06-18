@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
 
-function DefaultTemplate(){
+function DefaultTemplate() {
 	return (
 		<main>
-			<Outlet />
+            <Outlet />
 		</main>
 	);
 }

@@ -3,7 +3,6 @@ import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import CreateLobby from './CreateLobby';
@@ -52,7 +51,7 @@ function LobbyManager() {
             <Modal.Body>
                 <h4>Stworz lobby lub dolacz do przyjaciela</h4>
                 <div>
-                    <CreateLobby joinLobby={ joinLobby } />
+                    <CreateLobby joinLobby={joinLobby} conn={conn} />
                 </div>
             </Modal.Body>
         </Modal>

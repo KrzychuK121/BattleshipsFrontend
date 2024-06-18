@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 
-function CreateLobby({ joinLobby }) {
+function CreateLobby({ joinLobby, conn }) {
     const [username, setUsername] = useState();
     const [chatConnection, setChatConnection] = useState();
+    const navigate = useNavigate();
 
     return (
         <Form onSubmit={
             e => {
                 e.preventDefault();
                 joinLobby(username, chatConnection);
+                navigate('/initBoard', {state: conn})
             }
         }>
             <Row className='px-5 py-5'>

@@ -1,7 +1,9 @@
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
-import Board from './board/Board';
-import ShipPanel from './board/shipControl/ShipPanel';
+import Board from '../board/Board';
+import ShipPanel from '../board/shipControl/ShipPanel';
+import ReadyStatus from '../board/ReadyStatus';
 import InitBoardPlayersStatus from './InitBoardPlayersStatus';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,6 +16,12 @@ const ShipOrientation = {
 
 function InitBoardPanel() {
     const boardSize = 10;
+
+    const location = useLocation();
+    const { state } = location || {};
+    const conn = state || {};
+
+    console.log(conn);
 
     const [lastSelected, setLastSelected] = useState('');
     const [selectedShipLength, setSelectedShipLength] = useState(0);
@@ -113,8 +121,6 @@ function InitBoardPanel() {
         if (ifNoAvailableShips())
             setIsShipPanelEmpty(true);
 
-        console.log(`isShipPanelEmpty? ${ifNoAvailableShips()}`);
-
         // clearing variables for highlighting ship shape on board
         setLastSelected('');
         setSelectedShipLength(0);
@@ -151,11 +157,15 @@ function InitBoardPanel() {
                     
                     <div className='my-5'></div>
                     <Col xs={1} sm='auto'>
-                        <ShipPanel
-                            shipCards={shipCards}
-                            lastSelected={lastSelected}
-                            onSelectedShipHandler={onSelectedShipHandler}
-                        />
+                        {
+                            isShipPanelEmpty
+                            ? <ReadyStatus />
+                            : <ShipPanel
+                                  shipCards={shipCards}
+                                  lastSelected={lastSelected}
+                                  onSelectedShipHandler={onSelectedShipHandler}
+                            />
+                        }
                     </Col>
                 </Row>
             </Col>

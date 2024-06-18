@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import DefaultTemplate from './routes/DefaultTemplate';
 import LobbyManager from './components/lobby/LobbyManager';
-import InitBoardPanel from './components/InitBoardPanel';
+import InitBoardPanel from './components/initBoard/InitBoardPanel';
 import Board from './components/board/Board';
 
 const router = createBrowserRouter(
