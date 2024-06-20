@@ -1,11 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
 
-function ReadyStatus({ conn }) {
+function ReadyStatus({ conn, placedShips }) {
 
     const onClickHandler = async () => {
+        console.log('placedShips at ReadyStatus: ');
+        console.log(placedShips);
+
         await conn.invoke(
-            'SetReady'
+            'SetReady',
+            placedShips
         );
     }
 
