@@ -18,7 +18,7 @@ function LobbyManager() {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Stworz lobby lub dolacz do przyjaciela</h4>
+                <h4>Stwórz lobby lub dołącz do przyjaciela</h4>
                 <div>
                     <CreateLobby />
                 </div>

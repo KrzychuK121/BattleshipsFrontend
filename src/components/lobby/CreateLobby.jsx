@@ -55,7 +55,7 @@ function CreateLobby() {
                         />
                     </Form.Group>
                     <Button variant='primary' type='submit'>
-                        Utworz pokoj
+                        Utwórz pokój
                     </Button>
                 </Col>
             </Row>

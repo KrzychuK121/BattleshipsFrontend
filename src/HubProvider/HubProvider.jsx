@@ -54,6 +54,7 @@ const HubProvider = ({ children }) => {
             setConnection(connection);
         } catch (e) {
             console.log(e.message);
+            errorHandler('Wystąpił błąd podczas połączenia z serwerem.');
         }
     }
 

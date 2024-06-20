@@ -167,7 +167,7 @@ function InitBoardPanel() {
             </Col>
             <Col md={3}>
                 <aside>
-                    <InitBoardPlayersStatus />
+                    <InitBoardPlayersStatus conn={conn} />
                 </aside>
             </Col>
         </Row>
