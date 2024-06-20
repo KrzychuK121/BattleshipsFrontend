@@ -43,7 +43,7 @@ function InitBoardPanel() {
         setPlacedShips(
             [
                 ...placedShips,
-                { name: 'shipNr' + fields.length, boardFields: fields }
+                { Name: 'shipNr' + fields.length, BoardFields: fields }
             ]
         );
     };
@@ -97,12 +97,13 @@ function InitBoardPanel() {
 
     const isCellOccupied = (cellId) => {
         return placedShips.some(
-            ship => ship.boardFields.includes(cellId)
+            ship => ship.BoardFields.includes(cellId)
         );
     };
 
     const onCellClickHandler = () => {
         if (
+            selectedShipLength === 0 ||
             highlightedCells.length !== selectedShipLength ||
             highlightedCells.some(isCellOccupied)
         )
@@ -155,7 +156,7 @@ function InitBoardPanel() {
                     <Col xs={1} sm='auto'>
                         {
                             isShipPanelEmpty
-                            ? <ReadyStatus conn={conn} />
+                            ? <ReadyStatus conn={conn} placedShips={placedShips} />
                             : <ShipPanel
                                   shipCards={shipCards}
                                   lastSelected={lastSelected}
