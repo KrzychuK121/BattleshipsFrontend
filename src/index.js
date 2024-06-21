@@ -7,7 +7,6 @@ import HubProvider from './HubProvider/HubProvider';
 import LobbyManager from './components/lobby/LobbyManager';
 import InitBoardPanel from './components/initBoard/InitBoardPanel';
 import GameBoardPanel from './components/gameBoard/GameBoardPanel';
-import Board from './components/board/Board';
 
 const router = createBrowserRouter(
     [
@@ -18,9 +17,6 @@ const router = createBrowserRouter(
                 },
                 {
                     path: '/lobby', element: <LobbyManager />
-                },
-                {
-                    path: '/board', element: <Board />
                 },
                 {
                     path: '/initBoard', element: <InitBoardPanel />

@@ -15,6 +15,12 @@ const ShipOrientation = {
     VERTICAL: 'vertical'
 }
 
+export const isCellOccupiedPS = (placedShips, cellId) => {
+    return placedShips.some(
+        ship => ship.BoardFields.includes(cellId)
+    );
+};
+
 function InitBoardPanel() {
     const boardSize = 10;
     const { conn } = useContext(HubContext);
@@ -96,9 +102,7 @@ function InitBoardPanel() {
     }
 
     const isCellOccupied = (cellId) => {
-        return placedShips.some(
-            ship => ship.BoardFields.includes(cellId)
-        );
+        return isCellOccupiedPS(placedShips, cellId);
     };
 
     const onCellClickHandler = () => {
@@ -156,7 +160,11 @@ function InitBoardPanel() {
                     <Col xs={1} sm='auto'>
                         {
                             isShipPanelEmpty
-                            ? <ReadyStatus conn={conn} placedShips={placedShips} />
+                            ? <ReadyStatus
+                                conn={conn}
+                                placedShips={placedShips}
+                                boardSize={boardSize }
+                            />
                             : <ShipPanel
                                   shipCards={shipCards}
                                   lastSelected={lastSelected}

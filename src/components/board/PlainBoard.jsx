@@ -12,7 +12,10 @@ function getRows(
     onCellOutHandler,
     highlightedCells,
     onCellClickHandler,
-    isCellOccupied
+    isCellOccupied,
+    isCellMissed,
+    isCellHitted,
+    isCellSunken
 ) {
     const rows = [];
 
@@ -28,8 +31,7 @@ function getRows(
 
             if (isHighlighted)
                 type = FieldType.HOVERED;
-
-            if (
+            else if (
                 isCellOccupied != null &&
                 isCellOccupied(id)
             )
@@ -44,7 +46,7 @@ function getRows(
                     onCellOutHandler,
                     onCellClickHandler
                 )
-                : getField(id, fieldType)
+                : getField(id, type)
                 
             );
 
@@ -93,7 +95,10 @@ function PlainBoard(
         highlightedCells,
         onWheelHandler,
         onCellClickHandler,
-        isCellOccupied
+        isCellOccupied,
+        isCellMissed,
+        isCellHitted,
+        isCellSunken
     }
 ) {
 
@@ -114,7 +119,10 @@ function PlainBoard(
                             onCellOutHandler,
                             highlightedCells,
                             onCellClickHandler,
-                            isCellOccupied
+                            isCellOccupied,
+                            isCellMissed,
+                            isCellHitted,
+                            isCellSunken
                         )
                     }
                 </tbody>
