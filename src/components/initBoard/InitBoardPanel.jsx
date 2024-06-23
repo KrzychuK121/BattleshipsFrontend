@@ -77,12 +77,12 @@ function InitBoardPanel() {
         if (orientation === ShipOrientation.HORIZONTAL) {
             const startCol = Math.min(col, boardSize - selectedShipLength);
             for (let i = 0; i < selectedShipLength; i++) {
-                cellsToHighlight.push(`${row}${startCol + i}`);
+                cellsToHighlight.push(`${row}:${startCol + i}`);
             }
         } else if (orientation === ShipOrientation.VERTICAL) {
             const startRow = Math.min(row, boardSize - selectedShipLength);
             for (let i = 0; i < selectedShipLength; i++) {
-                cellsToHighlight.push(`${startRow + i}${col}`);
+                cellsToHighlight.push(`${startRow + i}:${col}`);
             }
         }
 

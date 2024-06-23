@@ -43,7 +43,6 @@ function InitBoardPlayersStatus({ conn }) {
                 conn.on(
                     'UpdateOpponentsStatus',
                     async (username, status) => {
-                        console.log('UpdateOpponentsStatus');
                         setOpponent(username, status);
                     }
                 );

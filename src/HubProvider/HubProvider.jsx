@@ -31,6 +31,7 @@ const HubProvider = ({ children }) => {
                 'JoinErrorHandler',
                 async (message) => {
                     await errorHandler(message);
+                    await connection.stop();
                 }
             );
 

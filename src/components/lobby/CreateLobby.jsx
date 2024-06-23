@@ -11,7 +11,7 @@ function CreateLobby() {
     const [errorMess, setErrorMess] = useState(null);
 
     const navigate = useNavigate();
-    const { joinLobby } = useContext(HubContext);
+    const { conn, joinLobby } = useContext(HubContext);
 
     const successHandler = async () => {
         navigate('/initBoard');

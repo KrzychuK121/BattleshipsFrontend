@@ -4,6 +4,24 @@ import { Table } from 'react-bootstrap';
 import classes from './PlainBoard.module.css';
 import Field, { FieldType } from './Field';
 
+function getField(
+    id,
+    type,
+    onCellHoverHandler = null,
+    onCellOutHandler = null,
+    onCellClickHandler = null
+) {
+    return (
+        <Field
+            key={id}
+            type={type}
+            onCellHoverHandler={onCellHoverHandler}
+            onCellOutHandler={onCellOutHandler}
+            onCellClickHandler={onCellClickHandler}
+        />
+    );
+}
+
 function getRows(
     rowsCount,
     colsCount,
@@ -13,16 +31,14 @@ function getRows(
     highlightedCells,
     onCellClickHandler,
     isCellOccupied,
-    isCellMissed,
-    isCellHitted,
-    isCellSunken
+    customFields
 ) {
     const rows = [];
 
     for (let i = 0; i < rowsCount; i++) {
         const cols = [];
         for (let j = 0; j < colsCount; j++) {
-            let id = `${i}${j}`;
+            let id = `${i}:${j}`;
             let isHighlighted =
                 highlightedCells != null &&
                 highlightedCells.includes(id);
@@ -36,18 +52,29 @@ function getRows(
                 isCellOccupied(id)
             )
                 type = FieldType.SHIP;
+            else if (
+                customFields != null &&
+                customFields.has(id)
+            )
+                type = customFields.get(id);
+
+            const onCellHoverHandlerSafe = onCellHoverHandler != null
+                ? () => onCellHoverHandler(i, j)
+                : null;
+
+            const onCellClickHandlerSafe = onCellClickHandler != null
+                ? () => onCellClickHandler(id)
+                : null;
 
             cols.push(
-                highlightedCells != null
-                ? getFieldWithHover(
-                    id, i, j,
+                getField(
+                    id,
                     type,
-                    onCellHoverHandler,
+                    onCellHoverHandlerSafe,
                     onCellOutHandler,
-                    onCellClickHandler
+                    onCellClickHandlerSafe
                 )
-                : getField(id, type)
-                
+
             );
 
         }
@@ -55,33 +82,6 @@ function getRows(
     }
 
     return rows;
-}
-
-function getFieldWithHover(
-    id,
-    row,
-    col,
-    type,
-    onCellHoverHandler,
-    onCellOutHandler,
-    onCellClickHandler
-) {
-    return (
-        <Field
-            key={id}
-            type={type}
-            onCellHoverHandler={() => onCellHoverHandler(row, col)}
-            onCellOutHandler={onCellOutHandler}
-            onCellClickHandler={onCellClickHandler}
-        />
-    );
-}
-
-function getField(
-    id,
-    type
-) {
-    return <Field key={id} type={type} />;
 }
 
 function PlainBoard(
@@ -96,9 +96,7 @@ function PlainBoard(
         onWheelHandler,
         onCellClickHandler,
         isCellOccupied,
-        isCellMissed,
-        isCellHitted,
-        isCellSunken
+        customFields
     }
 ) {
 
@@ -120,9 +118,7 @@ function PlainBoard(
                             highlightedCells,
                             onCellClickHandler,
                             isCellOccupied,
-                            isCellMissed,
-                            isCellHitted,
-                            isCellSunken
+                            customFields
                         )
                     }
                 </tbody>

@@ -10,7 +10,8 @@ function Board({
     highlightedCells,
     onWheelHandler,
     onCellClickHandler,
-    isCellOccupied
+    isCellOccupied,
+    customFields
 }) {
 
     return (
@@ -24,6 +25,7 @@ function Board({
             onWheelHandler={onWheelHandler}
             onCellClickHandler={onCellClickHandler}
             isCellOccupied={isCellOccupied}
+            customFields={customFields}
         />
     );
 }
