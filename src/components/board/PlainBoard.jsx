@@ -48,15 +48,17 @@ function getRows(
             if (isHighlighted)
                 type = FieldType.HOVERED;
             else if (
-                isCellOccupied != null &&
-                isCellOccupied(id)
-            )
-                type = FieldType.SHIP;
-            else if (
                 customFields != null &&
                 customFields.has(id)
             )
                 type = customFields.get(id);
+            else if (
+                isCellOccupied != null &&
+                isCellOccupied(id)
+            )
+                type = FieldType.SHIP;
+            
+                
 
             const onCellHoverHandlerSafe = onCellHoverHandler != null
                 ? () => onCellHoverHandler(i, j)
