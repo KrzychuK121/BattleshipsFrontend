@@ -1,10 +1,10 @@
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 
 import { HubContext } from '../../HubProvider/HubContext';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 
 import Board from '../board/Board';
 import { FieldType } from '../board/Field';
@@ -17,12 +17,13 @@ function GameBoardPanel() {
 	const [isMyTurn, setIsMyTurn] = useState(false);
 
 	const [imTheWinner, setImTheWinner] = useState(false);
-	const [winnerUsername, setWinnerUsername] = useState(false);
+	const [winnerUsername, setWinnerUsername] = useState('');
 
 	const [shotedCells, setShotedCells] = useState([]);
 	const [myCustomFields, setMyCustomFields] = useState(new Map());
 	const [opponentCustomFields, setOpponentCustomFields] = useState(new Map());
 
+	const navigate = useNavigate();
 	const location = useLocation();
 	const { state } = location || {};
 	const { placedShips, boardSize } = state || {};
@@ -41,6 +42,11 @@ function GameBoardPanel() {
 			conn.on(
 				'GetWhosFirstAndGameStatus',
 				(isGameStarting, isMyTurn) => {
+					console.log('GetWhosFirstAndGameStatus');
+					console.log('--------------------------');
+					console.log(`isGameStarting: ${isGameStarting}`);
+					console.log(`isMyTurn: ${isMyTurn}`);
+					console.log('--------------------------');
 					setIsGameStarting(isGameStarting);
 					setIsMyTurn(isMyTurn);
 				}
@@ -135,6 +141,18 @@ function GameBoardPanel() {
 
 	};
 
+	const backToLobbyHandler = async () => {
+		if (winnerUsername === '')
+			return;
+
+		if (conn == null)
+			return;
+
+		await conn.stop();
+
+		navigate('/lobby');
+	};
+
 	return (
 		<Container>
 			<Row className='justify-content-center'>
@@ -165,7 +183,28 @@ function GameBoardPanel() {
 			</Row>
 			<Row className='justify-content-center'>
 				<Col md={6}>
-					<span>{isMyTurn ? 'Twoja kolej' : 'Poczekaj na ruch przeciwnika'}</span>
+					{
+						winnerUsername === '' &&
+						<div>
+							<h2>Kogo ruch?</h2>
+							<span>{isMyTurn ? 'Twoja kolej' : 'Poczekaj na ruch przeciwnika'}</span>
+						</div>
+					}
+					{
+						winnerUsername !== '' &&
+						<div>
+							<Row>
+								<h2>{imTheWinner ? 'Wygrałeś' : 'Przegrałeś'}</h2>
+								<span>Gracz {winnerUsername} wygrywa grę. Gratulacje!</span>
+							</Row>
+							<Row>
+								<Button sm={1} variant='primary' onClick={backToLobbyHandler}>
+									Powrót do menu
+								</Button>
+							</Row>
+						</div>						
+					}
+					
 				</Col>
 			</Row>
 		</Container>

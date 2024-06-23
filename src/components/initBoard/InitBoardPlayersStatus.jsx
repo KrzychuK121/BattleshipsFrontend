@@ -46,11 +46,11 @@ function InitBoardPlayersStatus({ conn }) {
                         setOpponent(username, status);
                     }
                 );
-
-                await conn.invoke('CheckOpponentsStatus');
+                if(conn.state !== 'Disconnected')
+                    await conn.invoke('CheckOpponentsStatus');
             }
-
-            processReadyData();
+            if(conn != null)
+                processReadyData();
         }, [conn]
     );
 
