@@ -118,6 +118,10 @@ function GameBoardPanel() {
 		return isCellOccupiedPS(placedShips, cellId);
 	};
 
+	const isGameOver = () => {
+		return winnerUsername !== '';
+	}
+
 	const onClickAction = async (cellId) => {
 		if (shotedCells.includes(cellId))
 			return;
@@ -142,12 +146,15 @@ function GameBoardPanel() {
 	};
 
 	const backToLobbyHandler = async () => {
-		if (winnerUsername === '')
+		if (!isGameOver())
 			return;
 
 		if (conn == null)
 			return;
 
+		await conn.invoke(
+			'LeaveSpecificLobby'
+		);
 		await conn.stop();
 
 		navigate('/lobby');
@@ -174,7 +181,7 @@ function GameBoardPanel() {
 						boardSize={boardSize}
 						customFields={opponentCustomFields}
 						onCellClickHandler={
-							isMyTurn && isGameStarting
+							isMyTurn && isGameStarting && !isGameOver()
 							? onClickAction
 							: null
 						}
@@ -184,14 +191,14 @@ function GameBoardPanel() {
 			<Row className='justify-content-center'>
 				<Col md={6}>
 					{
-						winnerUsername === '' &&
+						!isGameOver() &&
 						<div>
 							<h2>Kogo ruch?</h2>
 							<span>{isMyTurn ? 'Twoja kolej' : 'Poczekaj na ruch przeciwnika'}</span>
 						</div>
 					}
 					{
-						winnerUsername !== '' &&
+						isGameOver() &&
 						<div>
 							<Row>
 								<h2>{imTheWinner ? 'Wygrałeś' : 'Przegrałeś'}</h2>
