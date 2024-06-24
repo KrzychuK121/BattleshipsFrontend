@@ -20,6 +20,7 @@ function GameBoardPanel() {
 	const [winnerUsername, setWinnerUsername] = useState('');
 
 	const [shotedCells, setShotedCells] = useState([]);
+	const [highlightedCells, setHighlightedCells] = useState([]);
 	const [myCustomFields, setMyCustomFields] = useState(new Map());
 	const [opponentCustomFields, setOpponentCustomFields] = useState(new Map());
 
@@ -42,11 +43,11 @@ function GameBoardPanel() {
 			conn.on(
 				'GetWhosFirstAndGameStatus',
 				(isGameStarting, isMyTurn) => {
-					console.log('GetWhosFirstAndGameStatus');
+					/*console.log('GetWhosFirstAndGameStatus');
 					console.log('--------------------------');
 					console.log(`isGameStarting: ${isGameStarting}`);
 					console.log(`isMyTurn: ${isMyTurn}`);
-					console.log('--------------------------');
+					console.log('--------------------------');*/
 					setIsGameStarting(isGameStarting);
 					setIsMyTurn(isMyTurn);
 				}
@@ -122,11 +123,16 @@ function GameBoardPanel() {
 		return winnerUsername !== '';
 	}
 
+	const isPlayerAllowedToShoot = () => {
+		return isMyTurn && isGameStarting && !isGameOver();
+	}
+
 	const onClickAction = async (cellId) => {
 		if (shotedCells.includes(cellId))
 			return;
 
 		setShotedCells([...shotedCells, cellId]);
+		setHighlightedCells([]);
 
 		if (conn != null) {
 			await conn.invoke(
@@ -137,12 +143,17 @@ function GameBoardPanel() {
 			
 	};
 
-	const onHoverAction = () => {
+	const onHoverAction = (i, j) => {
+		const cellId = `${i}:${j}`;
 
+		if (shotedCells.includes(cellId))
+			return;
+
+		setHighlightedCells([cellId]);
 	};
 
 	const onHoverOutAction = () => {
-
+		setHighlightedCells([]);
 	};
 
 	const backToLobbyHandler = async () => {
@@ -181,8 +192,23 @@ function GameBoardPanel() {
 						boardSize={boardSize}
 						customFields={opponentCustomFields}
 						onCellClickHandler={
-							isMyTurn && isGameStarting && !isGameOver()
+							isPlayerAllowedToShoot()
 							? onClickAction
+							: null
+						}
+						onCellHoverHandler={
+							isPlayerAllowedToShoot()
+							? onHoverAction
+							: null
+						}
+						onCellOutHandler={
+							isPlayerAllowedToShoot()
+							? onHoverOutAction
+							: null
+						}
+						highlightedCells={
+							isPlayerAllowedToShoot()
+							? highlightedCells
 							: null
 						}
 					/>
