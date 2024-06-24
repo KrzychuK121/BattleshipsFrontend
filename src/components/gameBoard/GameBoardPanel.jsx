@@ -174,7 +174,7 @@ function GameBoardPanel() {
 	return (
 		<Container>
 			<Row className='justify-content-center'>
-				<Col md={5}>
+				<Col sm={1} md={5}>
 					<h2>
 						Twoja plansza
 					</h2>
@@ -184,7 +184,7 @@ function GameBoardPanel() {
 						customFields={myCustomFields}
 					/>
 				</Col>
-				<Col md={5}>
+				<Col sm={1} md={5}>
 					<h2>
 						Plansza przeciwnika
 					</h2>

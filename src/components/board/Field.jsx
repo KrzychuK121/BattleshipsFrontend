@@ -8,7 +8,7 @@ function Field({
 }) {
 	return (
 		<td
-			className='px-4 py-4'
+			className='px-3 py-3'
 			style={{ backgroundColor: type }}
 			onMouseOver={onCellHoverHandler}
 			onMouseOut={onCellOutHandler}
